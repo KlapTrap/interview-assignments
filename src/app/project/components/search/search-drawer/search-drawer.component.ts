@@ -55,7 +55,7 @@ export class SearchDrawerComponent implements OnInit {
       nzWidth: 1040,
       nzClosable: false,
       nzFooter: null,
-      nzComponentParams: {
+      nzData: {
         issue$: this._projectQuery.issueById$(issue.id)
       }
     });

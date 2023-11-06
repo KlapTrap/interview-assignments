@@ -1,5 +1,4 @@
 import { AppComponent } from '@jira-clone/app.component';
-import { NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
 
 describe('AppComponent', () => {
@@ -28,7 +27,6 @@ describe('AppComponent', () => {
       projectQuery,
       changeDetectorRef,
       projectService,
-      googleAnalyticsService
     );
   });
   it('should be able to set Loading', () => {
@@ -39,16 +37,4 @@ describe('AppComponent', () => {
     component.ngAfterViewInit();
     expect(changeDetectorRef.detectChanges).toHaveBeenCalled();
   });
-  it('should be able to handle Google Analytics', () => {
-    component.handleGoogleAnalytics( new NavigationEnd(1, '/', '/'));
-
-    expect(googleAnalyticsService.sendPageView).toHaveBeenCalled();
-  });
-  it('should not be able to handle Google Analytics', () => {
-    googleAnalyticsService.sendPageView.calls.reset();
-    component.handleGoogleAnalytics({ });
-
-    expect(googleAnalyticsService.sendPageView).not.toHaveBeenCalled();
-  });
-
 });
