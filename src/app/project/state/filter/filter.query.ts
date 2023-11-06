@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Query } from '@datorama/akita';
 import { FilterStore, FilterState } from './filter.store';
 
@@ -12,6 +13,8 @@ export class FilterQuery extends Query<FilterState> {
   userIds$ = this.select('userIds');
   onlyMyIssue$ = this.select('onlyMyIssue');
   ignoreResolve$ = this.select('ignoreResolved');
+
+  all = toSignal(this.all$);
 
   constructor(protected store: FilterStore) {
     super(store);

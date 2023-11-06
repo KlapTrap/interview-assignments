@@ -1,70 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { UntypedFormControl } from '@angular/forms';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { JIssue } from '@jira-clone/interface/issue';
 import { ProjectQuery } from '@jira-clone/project/state/project/project.query';
 import { IssueUtil } from '@jira-clone/project/utils/issue';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
-import { combineLatest, Observable, of } from 'rxjs';
-import { switchMap, debounceTime, startWith } from 'rxjs/operators';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { IssueModalComponent } from '../../issues/issue-modal/issue-modal.component';
-import { SvgIconComponent } from '../../../../jira-control/svg-icon/svg-icon.component';
-import { IssueResultComponent } from '../issue-result/issue-result.component';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { debounceTime, take } from 'rxjs/operators';
 import { InputComponent } from '../../../../jira-control/input/input.component';
+import { SvgIconComponent } from '../../../../jira-control/svg-icon/svg-icon.component';
+import { IssueModalComponent } from '../../issues/issue-modal/issue-modal.component';
+import { IssueResultComponent } from '../issue-result/issue-result.component';
 
 @Component({
-    selector: 'search-drawer',
-    templateUrl: './search-drawer.component.html',
-    styleUrls: ['./search-drawer.component.scss'],
-    standalone: true,
-    imports: [InputComponent, NgIf, NgFor, IssueResultComponent, SvgIconComponent, AsyncPipe]
+  selector: 'search-drawer',
+  templateUrl: './search-drawer.component.html',
+  styleUrls: ['./search-drawer.component.scss'],
+  standalone: true,
+  providers: [NzModalService],
+  imports: [InputComponent, NgIf, NgFor, IssueResultComponent, SvgIconComponent, AsyncPipe]
 })
-@UntilDestroy()
-export class SearchDrawerComponent implements OnInit {
-  searchControl: UntypedFormControl = new UntypedFormControl('');
-  results$: Observable<JIssue[]>;
+export class SearchDrawerComponent {
+  protected searchControl: UntypedFormControl = new UntypedFormControl('');
+  protected hasSearchTermInput = computed(() => !!this.search());
+  protected results = computed(() => {
+    return this.projectQuery.issues().filter((issue) => {
+      const foundInTitle = IssueUtil.searchString(issue.title, this.search());
+      const foundInDescription = IssueUtil.searchString(issue.description, this.search());
+      return foundInTitle || foundInDescription;
+    });
+  });
 
-  get hasSearchTermInput(): boolean {
-    return !!this.searchControl.value;
-  }
+  private projectQuery = inject(ProjectQuery);
+  private drawer = inject(NzDrawerRef);
+  private modalService = inject(NzModalService);
 
-  constructor(
-    private _projectQuery: ProjectQuery,
-    private _drawer: NzDrawerRef,
-    private _modalService: NzModalService
-  ) {}
-
-  ngOnInit(): void {
-    const search$ = this.searchControl.valueChanges.pipe(debounceTime(50), startWith(this.searchControl.value));
-    this.results$ = combineLatest([search$, this._projectQuery.issues$]).pipe(
-      untilDestroyed(this),
-      switchMap(([term, issues]) => {
-        const matchIssues = issues.filter((issue) => {
-          const foundInTitle = IssueUtil.searchString(issue.title, term);
-          const foundInDescription = IssueUtil.searchString(issue.description, term);
-          return foundInTitle || foundInDescription;
-        });
-        return of(matchIssues);
-      })
-    );
-  }
-
-  closeDrawer() {
-    this._drawer.close();
-  }
+  private search = toSignal(this.searchControl.valueChanges.pipe(debounceTime(50)), {
+    initialValue: this.searchControl.value
+  });
 
   openIssueModal(issue: JIssue) {
-    this._modalService.create({
-      nzContent: IssueModalComponent,
-      nzWidth: 1040,
-      nzClosable: false,
-      nzFooter: null,
-      nzData: {
-        issue$: this._projectQuery.issueById$(issue.id)
-      }
+    this.drawer.afterClose.pipe(take(1)).subscribe(() => {
+      this.modalService.create({
+        nzContent: IssueModalComponent,
+
+        nzWidth: 1040,
+        nzClosable: false,
+        nzFooter: null,
+        nzData: {
+          issue$: this.projectQuery.issueById$(issue.id)
+        }
+      });
     });
-    this.closeDrawer();
+    this.drawer.close();
   }
 }

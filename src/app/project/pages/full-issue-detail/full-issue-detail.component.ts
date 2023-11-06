@@ -1,23 +1,25 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JIssue } from '@jira-clone/interface/issue';
+import { JProject } from '@jira-clone/interface/project';
+import { DeleteIssueModel } from '@jira-clone/interface/ui-model/delete-issue-model';
 import { ProjectConst } from '@jira-clone/project/config/const';
 import { ProjectQuery } from '@jira-clone/project/state/project/project.query';
-import { JProject } from '@jira-clone/interface/project';
-import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
-import { JIssue } from '@jira-clone/interface/issue';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
-import { DeleteIssueModel } from '@jira-clone/interface/ui-model/delete-issue-model';
-import { IssueDetailComponent } from '../../components/issues/issue-detail/issue-detail.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { Observable } from 'rxjs';
 import { BreadcrumbsComponent } from '../../../jira-control/breadcrumbs/breadcrumbs.component';
+import { IssueDetailComponent } from '../../components/issues/issue-detail/issue-detail.component';
 
 @Component({
-    selector: 'full-issue-detail',
-    templateUrl: './full-issue-detail.component.html',
-    styleUrls: ['./full-issue-detail.component.scss'],
-    standalone: true,
-    imports: [BreadcrumbsComponent, NgIf, IssueDetailComponent, AsyncPipe]
+  selector: 'full-issue-detail',
+  templateUrl: './full-issue-detail.component.html',
+  styleUrls: ['./full-issue-detail.component.scss'],
+  standalone: true,
+  providers: [NzModalService],
+  imports: [BreadcrumbsComponent, NgIf, IssueDetailComponent, AsyncPipe]
 })
 @UntilDestroy()
 export class FullIssueDetailComponent implements OnInit {
@@ -42,7 +44,7 @@ export class FullIssueDetailComponent implements OnInit {
     });
   }
 
-  deleteIssue({issueId, deleteModalRef}: DeleteIssueModel) {
+  deleteIssue({ issueId, deleteModalRef }: DeleteIssueModel) {
     this._projectService.deleteIssue(issueId);
     deleteModalRef.close();
     this.backHome();

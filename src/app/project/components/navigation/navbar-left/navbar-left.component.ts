@@ -1,20 +1,21 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthQuery } from '@jira-clone/project/auth/auth.query';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
-import { SearchDrawerComponent } from '../../search/search-drawer/search-drawer.component';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { AddIssueModalComponent } from '../../add-issue-modal/add-issue-modal.component';
-import { AvatarComponent } from '../../../../jira-control/avatar/avatar.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AvatarComponent } from '../../../../jira-control/avatar/avatar.component';
+import { AddIssueModalComponent } from '../../add-issue-modal/add-issue-modal.component';
+import { SearchDrawerComponent } from '../../search/search-drawer/search-drawer.component';
 
 @Component({
-    selector: 'app-navbar-left',
-    templateUrl: './navbar-left.component.html',
-    styleUrls: ['./navbar-left.component.scss'],
-    standalone: true,
-    imports: [NgFor, NzToolTipModule, NzIconModule, NgIf, AvatarComponent, AsyncPipe]
+  selector: 'app-navbar-left',
+  templateUrl: './navbar-left.component.html',
+  styleUrls: ['./navbar-left.component.scss'],
+  standalone: true,
+  providers: [NzModalService, NzDrawerService],
+  imports: [NgFor, NzToolTipModule, NzIconModule, NgIf, AvatarComponent, AsyncPipe]
 })
 export class NavbarLeftComponent implements OnInit {
   items: NavItem[];

@@ -7,11 +7,11 @@
     </j-input>
 </div>
 
-<ng-container *ngIf="hasSearchTermInput">
-    <ng-container *ngIf="results$ | async as results">
-        <ng-container *ngIf="results?.length; else noResultTmpl">
+<ng-container *ngIf="hasSearchTermInput()">
+    <ng-container >
+        <ng-container *ngIf="results().length; else noResultTmpl">
             <div class="section-title">Issues Result</div>
-            <issue-result *ngFor="let issue of results"
+            <issue-result *ngFor="let issue of results()"
                           (click)="openIssueModal(issue)"
                           [issue]="issue"></issue-result>
         </ng-container>

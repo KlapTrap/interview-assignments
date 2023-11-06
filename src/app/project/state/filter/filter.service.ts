@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FilterStore, createInitialFilterState } from './filter.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterService {
-  constructor(private store: FilterStore) {}
+  private store = inject(FilterStore);
 
   updateSearchTerm(searchTerm: string) {
     this.store.update({
