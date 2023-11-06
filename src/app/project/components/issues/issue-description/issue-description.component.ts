@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { JIssue } from '@jira-clone/interface/issue';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { quillConfiguration } from '@jira-clone/project/config/editor';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
 
@@ -12,7 +12,7 @@ import { ProjectService } from '@jira-clone/project/state/project/project.servic
 })
 export class IssueDescriptionComponent implements OnChanges {
   @Input() issue: JIssue;
-  descriptionControl: FormControl;
+  descriptionControl: UntypedFormControl;
   editorOptions = quillConfiguration;
   isEditing: boolean;
   isWorking: boolean;
@@ -22,7 +22,7 @@ export class IssueDescriptionComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const issueChange = changes.issue;
     if (issueChange.currentValue !== issueChange.previousValue) {
-      this.descriptionControl = new FormControl(this.issue.description);
+      this.descriptionControl = new UntypedFormControl(this.issue.description);
     }
   }
 

@@ -3,7 +3,7 @@ import { ProjectConst } from '@jira-clone/project/config/const';
 import { JProject, ProjectCategory } from '@jira-clone/interface/project';
 import { ProjectQuery } from '@jira-clone/project/state/project/project.query';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -16,7 +16,7 @@ import { NoWhitespaceValidator } from '@jira-clone/core/validators/no-whitespace
 @UntilDestroy()
 export class SettingsComponent implements OnInit {
   project: JProject;
-  projectForm: FormGroup;
+  projectForm: UntypedFormGroup;
   categories: ProjectCategory[];
   get breadcrumbs(): string[] {
     return [ProjectConst.Projects, this.project?.name, 'Settings'];
@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
     private _projectQuery: ProjectQuery,
     private _projectService: ProjectService,
     private _notification: NzNotificationService,
-    private _fb: FormBuilder,
+    private _fb: UntypedFormBuilder,
     private _router: Router
   ) {
     this.categories = [

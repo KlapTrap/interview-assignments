@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { JIssue } from '@jira-clone/interface/issue';
 import { ProjectQuery } from '@jira-clone/project/state/project/project.query';
@@ -17,7 +17,7 @@ import { IssueModalComponent } from '../../issues/issue-modal/issue-modal.compon
 })
 @UntilDestroy()
 export class SearchDrawerComponent implements OnInit {
-  searchControl: FormControl = new FormControl('');
+  searchControl: UntypedFormControl = new UntypedFormControl('');
   results$: Observable<JIssue[]>;
 
   get hasSearchTermInput(): boolean {
