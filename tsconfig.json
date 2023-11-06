@@ -3,8 +3,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@jira-clone/*": ["src/app/*"],
-      "@jira-clone/interface/*": ["src/app/interface/*"]
+      "@jira-clone/*": [
+        "src/app/*"
+      ],
+      "@jira-clone/interface/*": [
+        "src/app/interface/*"
+      ]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -14,8 +18,12 @@
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
-    "lib": ["es2018", "dom"]
+    "target": "ES2022",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
