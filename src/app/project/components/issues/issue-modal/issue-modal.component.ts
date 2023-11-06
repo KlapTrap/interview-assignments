@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JIssue } from '@jira-clone/interface/issue';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { DeleteIssueModel } from '@jira-clone/interface/ui-model/delete-issue-model';
 import { AsyncPipe } from '@angular/common';
@@ -16,7 +16,7 @@ import { IssueDetailComponent } from '../issue-detail/issue-detail.component';
     imports: [IssueDetailComponent, AsyncPipe]
 })
 export class IssueModalComponent {
-  @Input() issue$: Observable<JIssue>;
+  protected data = inject(NZ_MODAL_DATA)
 
   constructor(
     private _modal: NzModalRef,

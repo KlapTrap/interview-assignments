@@ -2,7 +2,7 @@ import { ProjectState, ProjectStore } from './project.store';
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import { IssueStatus, JIssue } from '@jira-clone/interface/issue';
-import { map, delay } from 'rxjs/operators';
+import { map, delay, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,7 @@ export class ProjectQuery extends Query<ProjectState> {
 
   issueById$(issueId: string){
     return this.issues$.pipe(
+      tap(x => console.log(x)),
       delay(500),
       map((issues) => issues.find(x => x.id === issueId))
     );
