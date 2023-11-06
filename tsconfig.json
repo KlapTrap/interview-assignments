@@ -3,12 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@jira-clone/*": [
-        "src/app/*"
-      ],
-      "@jira-clone/interface/*": [
-        "src/app/interface/*"
-      ]
+      "@jira-clone/*": ["src/app/*"],
+      "@jira-clone/interface/*": ["src/app/interface/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -19,10 +15,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {

@@ -19,21 +19,21 @@ export class ProjectQuery extends Query<ProjectState> {
 
   lastIssuePosition = (status: IssueStatus): number => {
     const raw = this.store.getValue();
-    const issuesByStatus = raw.issues.filter(x => x.status === status);
+    const issuesByStatus = raw.issues.filter((x) => x.status === status);
     return issuesByStatus.length;
   };
 
-  issueByStatusSorted$ = (status: IssueStatus): Observable<JIssue[]> => this.issues$.pipe(
-      map((issues) => issues
-          .filter((x) => x.status === status)
-          .sort((a, b) => a.listPosition - b.listPosition))
+  issueByStatusSorted$ = (status: IssueStatus): Observable<JIssue[]> =>
+    this.issues$.pipe(
+      map((issues) =>
+        issues.filter((x) => x.status === status).sort((a, b) => a.listPosition - b.listPosition)
+      )
     );
 
-  issueById$(issueId: string){
+  issueById$(issueId: string) {
     return this.issues$.pipe(
-      tap(x => console.log(x)),
       delay(500),
-      map((issues) => issues.find(x => x.id === issueId))
+      map((issues) => issues.find((x) => x.id === issueId))
     );
   }
 }

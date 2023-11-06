@@ -5,13 +5,18 @@ import { LoginPayload } from '@jira-clone/project/auth/loginPayload';
 import { SvgDefinitionsComponent } from '../jira-control/svg-definitions/svg-definitions.component';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation/navigation.component';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NZ_JIRA_ICONS } from './config/icons';
 
 @Component({
-    selector: 'app-project',
-    templateUrl: './project.component.html',
-    styleUrls: ['./project.component.scss'],
-    standalone: true,
-    imports: [NavigationComponent, RouterOutlet, SvgDefinitionsComponent]
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.scss'],
+  standalone: true,
+  providers: [NzDrawerService, NzModalService, NzIconModule.forChild(NZ_JIRA_ICONS).providers],
+  imports: [NavigationComponent, RouterOutlet, SvgDefinitionsComponent]
 })
 export class ProjectComponent implements OnInit {
   expanded: boolean;
