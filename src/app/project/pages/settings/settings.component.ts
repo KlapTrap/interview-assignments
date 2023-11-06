@@ -3,15 +3,21 @@ import { ProjectConst } from '@jira-clone/project/config/const';
 import { JProject, ProjectCategory } from '@jira-clone/interface/project';
 import { ProjectQuery } from '@jira-clone/project/state/project/project.query';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NoWhitespaceValidator } from '@jira-clone/core/validators/no-whitespace.validator';
+import { ButtonComponent } from '../../../jira-control/button/button.component';
+import { NgFor } from '@angular/common';
+import { AutofocusDirective } from '../../../core/directives/autofocus.directive';
+import { BreadcrumbsComponent } from '../../../jira-control/breadcrumbs/breadcrumbs.component';
 
 @Component({
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.scss'],
+    standalone: true,
+    imports: [BreadcrumbsComponent, ReactiveFormsModule, AutofocusDirective, NgFor, ButtonComponent]
 })
 @UntilDestroy()
 export class SettingsComponent implements OnInit {

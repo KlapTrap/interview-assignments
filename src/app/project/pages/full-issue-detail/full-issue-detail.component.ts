@@ -8,11 +8,16 @@ import { Observable } from 'rxjs';
 import { JIssue } from '@jira-clone/interface/issue';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
 import { DeleteIssueModel } from '@jira-clone/interface/ui-model/delete-issue-model';
+import { IssueDetailComponent } from '../../components/issues/issue-detail/issue-detail.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { BreadcrumbsComponent } from '../../../jira-control/breadcrumbs/breadcrumbs.component';
 
 @Component({
-  selector: 'full-issue-detail',
-  templateUrl: './full-issue-detail.component.html',
-  styleUrls: ['./full-issue-detail.component.scss']
+    selector: 'full-issue-detail',
+    templateUrl: './full-issue-detail.component.html',
+    styleUrls: ['./full-issue-detail.component.scss'],
+    standalone: true,
+    imports: [BreadcrumbsComponent, NgIf, IssueDetailComponent, AsyncPipe]
 })
 @UntilDestroy()
 export class FullIssueDetailComponent implements OnInit {

@@ -5,11 +5,15 @@ import { ProjectService } from '@jira-clone/project/state/project/project.servic
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { DeleteIssueModel } from '@jira-clone/interface/ui-model/delete-issue-model';
+import { AsyncPipe } from '@angular/common';
+import { IssueDetailComponent } from '../issue-detail/issue-detail.component';
 
 @Component({
-  selector: 'issue-modal',
-  templateUrl: './issue-modal.component.html',
-  styleUrls: ['./issue-modal.component.scss']
+    selector: 'issue-modal',
+    templateUrl: './issue-modal.component.html',
+    styleUrls: ['./issue-modal.component.scss'],
+    standalone: true,
+    imports: [IssueDetailComponent, AsyncPipe]
 })
 export class IssueModalComponent {
   @Input() issue$: Observable<JIssue>;

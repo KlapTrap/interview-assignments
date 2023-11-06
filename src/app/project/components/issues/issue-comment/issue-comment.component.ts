@@ -1,15 +1,21 @@
 import { Component, Input, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { JComment } from '@jira-clone/interface/comment';
 import { JUser } from '@jira-clone/interface/user';
 import { AuthQuery } from '@jira-clone/project/auth/auth.query';
 import { ProjectService } from '@jira-clone/project/state/project/project.service';
+import { ButtonComponent } from '../../../../jira-control/button/button.component';
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { NgIf, DatePipe } from '@angular/common';
+import { AvatarComponent } from '../../../../jira-control/avatar/avatar.component';
 
 @Component({
-  selector: 'issue-comment',
-  templateUrl: './issue-comment.component.html',
-  styleUrls: ['./issue-comment.component.scss']
+    selector: 'issue-comment',
+    templateUrl: './issue-comment.component.html',
+    styleUrls: ['./issue-comment.component.scss'],
+    standalone: true,
+    imports: [AvatarComponent, NgIf, TextFieldModule, ReactiveFormsModule, ButtonComponent, DatePipe]
 })
 @UntilDestroy()
 export class IssueCommentComponent implements OnInit {
